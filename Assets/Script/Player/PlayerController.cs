@@ -5,11 +5,13 @@ public class PlayerController : MonoBehaviour {
 
 	[Tooltip("Movement speed")]
 	public float speed;
-
 	[Tooltip("Character controller")]
 	public CharacterController controller;
+    [Tooltip("Character animator")]
+    public Animator animator;
 
 	private Vector3 position;
+    private float distance;
 
 	private readonly float RAY_DISTANCE = 1000;
 
@@ -37,12 +39,24 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void moveToPosition() {
-		if (Vector3.Distance (transform.position, position) > 0.5) {
-			Quaternion newRotation = Quaternion.LookRotation (position - transform.position, Vector3.forward);
-			newRotation.x = newRotation.z = 0;
+	    getDistanceToPosition();
+	    if (distance > 0.5)
+	    {
+	        animator.SetBool("IsRunning", true);
+	        Quaternion newRotation = Quaternion.LookRotation(position - transform.position, Vector3.forward);
+	        newRotation.x = newRotation.z = 0;
 
-			transform.rotation = newRotation;
-			controller.SimpleMove (transform.forward * speed);
-		}
+	        transform.rotation = newRotation;
+	        controller.SimpleMove(transform.forward * speed);
+	    }
+	    else
+	    {
+	        animator.SetBool("IsRunning", false);
+	    }
 	}
+
+    void getDistanceToPosition()
+    {
+        distance = Vector3.Distance(transform.position, position);
+    }
 }
