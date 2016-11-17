@@ -24,15 +24,11 @@ public class PlayerController : MonoBehaviour {
 	
 	void Update () {
 		if(Input.GetMouseButtonDown (0) && isNotAttacking ()) {
-			Debug.Log ("LeftMouseButton - start");
 			locatePosition (out movementPosition);
 			stateRunning ();
-			Debug.Log ("LeftMouseButton - end");
 		} else if (Input.GetMouseButtonDown (1) && isNotAttacking ()) {
-			Debug.Log ("RightMouseButton - start");
 			locatePosition (out attackPosition);
 			stateAttacking ();
-			Debug.Log ("RightMouseButton - end");
 		}
 
 		if (isRunning())
@@ -62,11 +58,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void stateAttacking() {
-		Debug.Log ("StateAttacking - start");
 		state = State.ATTACKING;
 		animator.SetBool("IsRunning", false);
 		animator.SetBool("IsAttacking", true);
-		Debug.Log ("StateAttacking - end");
 	}
 
 	void stateIdle() {
@@ -106,9 +100,7 @@ public class PlayerController : MonoBehaviour {
     }
 
 	public void endAttacking() {
-		Debug.Log ("EndAttacking - start");
 		stateIdle ();
-		Debug.Log ("EndAttacking - stop");
 	}
 
 	enum State {
